@@ -306,11 +306,15 @@ p {
 }
 
 .power_bar {
-background: white;
+    background: white;
     width: 30%;
     height: 100%;
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
+}
+
+.add_bg {
+    background: rgb(112, 55, 55);
 }
 
 .max_power {

@@ -1,9 +1,10 @@
 
 let currentPokemon;
+let color;
 
 
 async function loadPokemon() {
-    let url = 'https://pokeapi.co/api/v2/pokemon/34';
+    let url = 'https://pokeapi.co/api/v2/pokemon/264';
     let response = await fetch(url);
     currentPokemon = await response.json();
     console.log('loaded', currentPokemon);
@@ -30,6 +31,16 @@ function renderPokemonStats() {
          document.getElementById('stat_total_power').innerHTML = `${total}`;
          setPowerBars(i, base_stat, total);
     }
+    checkHighestStat(stats);
+}
+
+function checkHighestStat(stats) {
+    let array_stats = stats.map(sum => sum.base_stat);
+    let heighest_stat = Math.max(...array_stats);
+    let index = array_stats.indexOf(heighest_stat);
+    console.log(index);
+    document.getElementById(`power_bar${index}`).classList.add(`type_${color}`);
+    console.log(color);
 }
 
 function setPowerBars(i, base_stat, total) {
@@ -50,6 +61,7 @@ function renderPokemonCard() {
     document.getElementById('pokemon_id').innerHTML = `#${currentPokemon['id']}`;
     for (let i = 0; i < types.length; i++) {
         let type = currentPokemon['types'][i]['type']['name'];
+        color = currentPokemon['types'][0]['type']['name'];
         document.getElementById('types_line').innerHTML += `
             <div id="type" class="type_bg d-flex type_${type}">
                 <img class="type_icon_pokemon_card" id="type_icon_pokemon_card" src="img/${type}.png" alt="">
