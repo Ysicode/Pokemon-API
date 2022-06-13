@@ -134,10 +134,15 @@ p {
     margin-left: 5px;
 }
 
+.pokemon_card_pic_area {
+    position: absolute;
+    right: 10%;
+    top: 10%;
+}
+
 .pokemon_card_pic {
     width: 400px;
     height: 400px;
-    margin-right: 20vw;
     object-fit: contain;
     transform: scale(1);
     transition: transform 225ms ease-in-out;
@@ -162,8 +167,99 @@ p {
     margin-top: -5vh;
     color: white;
     background-color: #282828;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
+    box-shadow: 0px 0px 130px 178px #282828;
+}
+
+.tabsbar {
+    margin-left: 5%;
+    justify-content: flex-start;
+}
+
+.card_bottom_tab {
+    border-bottom: 3px solid #b4a896;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    justify-content: center;
+}
+
+.tab1 {
+    background: #0000003d;
+    height: 10vh;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border-right: 1px solid white;
+}
+
+.tab2 {
+    background: #0000003d;
+    height: 10vh;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.tab3 {
+    background: #0000003d;
+    height: 10vh;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border-left: 1px solid white;
+}
+
+.tab_top {
+    margin-bottom: 7px;
+}
+
+.tab_pic {
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+}
+
+.tab_pic_height {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+
+.tab_pic_moves {
+    width: 22px;
+    height: 22px;
+    margin-right: 15px;
+}
+
+.tab_text {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.tab_bottom_text_left {
+    font-size: 17px;
+    font-weight: 300;
+    color: #969292;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #969292;
+}
+
+.tab_bottom_text {
+    font-size: 17px;
+    font-weight: 300;
+    color: #969292;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 
