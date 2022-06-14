@@ -136,7 +136,7 @@ p {
 
 .pokemon_card_pic_area {
     position: absolute;
-    right: 10%;
+    right: 15%;
     top: 10%;
 }
 
@@ -324,6 +324,63 @@ p {
     margin-top: 13px;
 }
 
+.area_next_button {
+    width: 10%;
+    z-index: 900;
+    height: 46%;
+    position: absolute;
+    bottom: 27%;
+    cursor: pointer;
+    
+}
+
+.next_pokemon_button {
+    width: 100%;
+    height: 100%;
+    bottom: 35%;
+    transform: scale(0);
+    transition: transform 125ms ease-in-out;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
+.area_next_button:hover  #next_pokemon_button {
+    transform: scale(1);
+    background-color: rgba(28, 28, 28, 0.749);
+    z-index: 901;
+}
+
+.area_next_right_button {
+    width: 10%;
+    z-index: 900;
+    height: 46%;
+    right: 0;
+    position: absolute;
+    bottom: 27%;
+    cursor: pointer;
+}
+
+.next_pokemon_right_button {
+    width: 100%;
+    height: 100%;
+    bottom: 35%;
+    right: 0;
+    transform: scale(0);
+    transition: transform 125ms ease-in-out;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+}
+
+.icon_pokemon_button_right {
+    transform: rotate(180deg);
+}
+
+.area_next_right_button:hover  #next_pokemon_right_button {
+    transform: scale(1);
+    background-color: rgba(28, 28, 28, 0.749);
+    z-index: 901;
+}
+
 
 
 
@@ -404,6 +461,10 @@ p {
 
 .type_gas{
     background: rgb(60, 64, 65);
+}
+
+.type_dark{
+    background: rgb(47 87 96);
 }
 
 
