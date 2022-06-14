@@ -69,6 +69,17 @@ p {
     cursor: pointer;
 }
 
+.search_icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: flex;
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    cursor: pointer;
+}
+
 .heart_outline {
     width: 35px;
     height: 35px;
