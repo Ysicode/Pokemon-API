@@ -8,6 +8,14 @@ let search = [];
 let searchIndex = 0;
 let searchFunction = false;
 
+document.addEventListener('keydown', keyDown);
+
+function keyDown(e) {
+    if (e.key === "Enter") {
+        filterPokemonCard();
+    }
+}
+
 function decrementPokemonShow() {
     if (searchFunction === true) {
         if (searchIndex <= 0) {
@@ -40,6 +48,7 @@ function incrementPokemonShow() {
     loadPokemon();
 }
 
+//Leading API
 async function loadPokemon() {
     if (searchFunction == true) {
         pokemonCardId = search[`${searchIndex}`];
@@ -60,11 +69,8 @@ async function getAllPokemons() {
     }
     console.log('loaded all', allPokemons);
 }
+/////////////
 
-function clearSearchArray() {
-    searchFunction = false;
-    search = [];
-}
 
 
 
@@ -78,6 +84,19 @@ function renderPokemonCard() {
     }
     renderPokemonInfo();
     setNewBackgroundColor();
+}
+
+function openSearch() {
+    searchFunction = false;
+    search = [];
+    document.getElementById('search_icon').classList.add('d-none');
+    document.getElementById('inputfield').classList.add('inputfield_open');
+    document.getElementById('inputfield').focus();
+}
+
+function closeSearch() {
+    document.getElementById('inputfield').classList.remove('inputfield_open');
+    document.getElementById('search_icon').classList.remove('d-none');
 }
 
 function filterPokemonCard() {
@@ -94,9 +113,11 @@ function filterPokemonCard() {
 function addPokemonsToSearch(i) {
     search.push(allPokemons[i].id);
     searchFunction = true;
+    searchIndex = 0;
     pokemonCardId = search[0];
     console.log(pokemonCardId);
     loadPokemon();
+    closeSearch();
 }
 
 function renderPokemonStyle() {

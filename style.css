@@ -80,6 +80,30 @@ p {
     cursor: pointer;
 }
 
+.inputfield {
+    transform: scaleX(0);
+    transition: all 150ms ease-in-out;
+    width: 50%;
+    height: 8%;
+    font-weight: 700;
+    object-fit: contain;
+    border: none;
+    border-radius: 100px;
+    text-align: center;
+    outline: none;
+    font-size: 48px;
+    color: white;
+    top: 1vh;
+    display: flex;
+    position: absolute;
+    left: 25%;
+    background-color: #282828d6;
+}
+
+.inputfield_open {
+    transform: scaleX(1);
+}
+
 .heart_outline {
     width: 35px;
     height: 35px;

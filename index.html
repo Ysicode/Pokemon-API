@@ -22,9 +22,8 @@
 <body onload="loadPokemon(), getAllPokemons()">
     <div class="pokemon_card_top" id="pokemon_card_top">
         <img class="left_arrow" id="left_arrow" class="left_arrow" src="img/left_arrow.png" alt="">
-        <img class="search_icon" src="img/search.png" alt="">
-        <input class="inputfield" onkeyup="clearSearchArray()" type="text" id="inputfield" placeholder="texfeld">
-        <button onclick="filterPokemonCard()" id="searchbutton">senden</button>
+        <img id="search_icon" onclick="openSearch()" class="search_icon" src="img/search.png" alt="">
+        <input class="inputfield"  type="text" id="inputfield" placeholder="search">
         <img onclick=" likePokemon()" class="heart_outline" id="heart_outline" src="img/heart_outline.png" alt="">
         <img onclick=" likePokemon()" class="heart_full d-none" id="heart_full" src="img/heart_full.png" alt="">
         <div class="name_line d-flex_space">
