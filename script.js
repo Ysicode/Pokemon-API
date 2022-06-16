@@ -5,18 +5,20 @@ let allPokemons = [];
 let search = [];
 let searchIndex = 0;
 let searchFunction = false;
-let startLoadingRange = 1;
-let endLoadingRange = 30;
+let startLoadingRange = 0;
+let endLoadingRange = 20;
 let singleView = false;
 
-function checkScrollHeight() {
-    const loadedPokemons = document.getElementById('pokemon_card_top_start');
-      if (loadedPokemons.offsetHeight + loadedPokemons.scrollTop >= loadedPokemons.scrollHeight) {  
-        startLoadingRange += 30;
-        endLoadingRange += 30;
-        getAllPokemons();
-      }  
+function loadMore() {
+    startLoadingRange += 80;
+    if (allPokemons.length - endLoadingRange <= 80) {
+        endLoadingRange = allPokemons.length;
+    }else {
+        endLoadingRange += 80;
+    }
+    renderAllPokemons();
 }
+
 
 document.addEventListener('keydown', keyDown);
 
@@ -71,21 +73,23 @@ async function loadPokemon() {
 }
 
 async function getAllPokemons() {
-for (let i = 1; i < 650; i++) {
+    for (let i = 1; i < 650; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
         currentPokemon = await response.json();
         console.log(currentPokemon);
         allPokemons.push(currentPokemon);
+        if (i == 20) {
+            renderAllPokemons();
+        }
     }
-    renderAllPokemons();
-    
+
 }
 
 function renderAllPokemons() {
     let content = document.getElementById('start_pokemon_cards');
-    content.innerHTML = '';
-    for (let i = 0; i < endLoadingRange; i++) {
+    
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
         const pokemon = allPokemons[i];
         let name = pokemon['name'];
         let number = pokemon['id'];
@@ -121,7 +125,7 @@ function renderPokemonCardAtStart(index) {
     for (let i = 0; i < types.length; i++) {
         let type = types[i]['type']['name'];
         typeStyle += `
-            <div onclick="setInputValueForSelectedType(${i}, ${index})" id="type" class="type_start d-flex type_${type}">
+            <div onclick="setInputValueForSelectedType(${i}, ${index}), event.stopPropagation()" id="type" class="type_start d-flex type_${type}">
                 <img class="icon_start_card" id="type_icon_pokemon_card" src="img/${type}.png" alt="">
                 <p class="type_pokemon_card" id="type_pokemon_card">${type}</p>
             </div>
@@ -181,6 +185,7 @@ function searchNotFoundAnimation() {
 function setInputValueForSelectedPokemon(i) {
     search = [];
     let inputvalue = allPokemons[i]['id'];
+    console.log(allPokemons[i]['id']);
     pokemonCardId = inputvalue;
     let typeSearch = document.getElementById('inputfield');
     typeSearch.value = inputvalue;
@@ -198,7 +203,7 @@ function setInputValueForSelectedType(i, index) {
         let typeSearch = document.getElementById('inputfield');
         typeSearch.value = inputvalue;
     }
-    
+
     searchFunction = true;
     filterPokemonCard();
 }
@@ -302,7 +307,7 @@ function setNavbarBackground() {
 }
 
 function openSearch() {
-    searchFunction = false;
+    searchFunction = true;
     search = [];
     document.getElementById('search_icon').classList.add('d-none');
     document.getElementById('inputfield').classList.add('inputfield_open');
@@ -315,19 +320,21 @@ function closeSearch() {
     document.getElementById('search_icon').classList.remove('d-none');
 }
 
- function openSingleView() {
+function openSingleView() {
     singleView = true;
     document.getElementById('pokemon_card_top').classList.remove('d-none');
     document.getElementById('pokemon_card_bottom').classList.remove('d-none');
     document.getElementById('title').classList.add('d-none');
     document.getElementById('left_arrow').classList.remove('d-none');
     document.getElementById('navbar').classList.remove('navbarscroll');
- }
+}
 
- function closeSingleView() {
+function closeSingleView() {
+    singleView = false;
+    searchFunction = false;
     setNavbarBackground();
     document.getElementById('pokemon_card_top').classList.add('d-none');
     document.getElementById('pokemon_card_bottom').classList.add('d-none');
     document.getElementById('title').classList.remove('d-none');
     document.getElementById('left_arrow').classList.add('d-none');
- }
+}

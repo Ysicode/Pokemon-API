@@ -1,6 +1,16 @@
 body {
     font-family: 'Urbanist', sans-serif;
     margin: 0;
+    overflow: hidden;
+}
+
+.load_more_button {
+    width: 100px;
+    height: 20px;
+    z-index: 999;
+    right: 50%;
+    bottom: 100px;
+    position: fixed;
 }
 
 h1 {
