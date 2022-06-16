@@ -19,13 +19,18 @@
 </head>
 
 
-<body onload="loadPokemon(), getAllPokemons()">
-    <div class="pokemon_card_top" id="pokemon_card_top">
-        <img class="left_arrow" id="left_arrow" class="left_arrow" src="img/left_arrow.png" alt="">
+<body onload="getAllPokemons()">
+    <div class="d-flex navbar" id="navbar">
+        <h1 id="title" class="title">POKEDEX</h1>
+        <img onclick="closeSingleView()" class="left_arrow d-none" id="left_arrow" class="left_arrow" src="img/left_arrow.png" alt="">
         <img id="search_icon" onclick="openSearch()" class="search_icon" src="img/search.png" alt="">
-        <input class="inputfield"  type="text" id="inputfield" placeholder="search">
+        <input class="inputfield" type="text" id="inputfield" placeholder="search">
         <img onclick=" likePokemon()" class="heart_outline" id="heart_outline" src="img/heart_outline.png" alt="">
         <img onclick=" likePokemon()" class="heart_full d-none" id="heart_full" src="img/heart_full.png" alt="">
+    </div>
+
+    <div class="pokemon_card_top d-none"  id="pokemon_card_top">
+
         <div class="name_line d-flex_space">
             <h1 id="current_name"></h1>
             <p class="pokemon_id" id="pokemon_id"></p>
@@ -38,68 +43,72 @@
         </div>
 
     </div>
-    <div class="pokemon_card_bottom" id="pokemon_card_bottom">
+    <div class="pokemon_card_bottom d-none" id="pokemon_card_bottom">
         <div class="tabsbar d-flex" id="tabsbar">
-           <div class="d-flex_column tab1">
-            <div class="tab_top d-flex">
-                <img class="tab_pic" src="img/weight.png" alt="">
-                <p class="tab_text">weight</p>
+            <div class="d-flex_column tab1">
+                <div class="tab_top d-flex">
+                    <img class="tab_pic" src="img/weight.png" alt="">
+                    <p class="tab_text">weight</p>
+                </div>
+                <div class="tab_bottom d-flex">
+                    <p id="weight_kg" class="tab_bottom_text_left"></p>
+                    <p id="weight_lbs" class="tab_bottom_text"></p>
+                </div>
             </div>
-            <div class="tab_bottom d-flex">
-                <p id="weight_kg" class="tab_bottom_text_left"></p>
-                <p id="weight_lbs" class="tab_bottom_text"></p>
+            <div class="d-flex_column tab2">
+                <div class="tab_top d-flex">
+                    <img class="tab_pic_height" src="img/height.png" alt="">
+                    <p class="tab_text">height</p>
+                </div>
+                <div class="tab_bottom d-flex">
+                    <p id="height_cm" class="tab_bottom_text_left">27cm / </p>
+                    <p id="height_ft" class="tab_bottom_text"> 1ft</p>
+                </div>
             </div>
-           </div>
-           <div class="d-flex_column tab2">
-            <div class="tab_top d-flex">
-                <img class="tab_pic_height" src="img/height.png" alt="">
-                <p class="tab_text">height</p>
+            <div class="d-flex_column tab3">
+                <div class="tab_top d-flex">
+                    <img class="tab_pic_moves" src="img/moves.png" alt="">
+                    <p class="tab_text">moves</p>
+                </div>
+                <div class="tab_bottom d-flex">
+                    <p id="moves" class="tab_bottom_text">127</p>
+                </div>
             </div>
-            <div class="tab_bottom d-flex">
-                <p id="height_cm" class="tab_bottom_text_left">27cm / </p>
-                <p id="height_ft" class="tab_bottom_text"> 1ft</p>
-            </div>
-           </div>
-           <div class="d-flex_column tab3">
-            <div class="tab_top d-flex">
-                <img class="tab_pic_moves" src="img/moves.png" alt="">
-                <p class="tab_text">moves</p>
-            </div>
-            <div class="tab_bottom d-flex">
-                <p id="moves" class="tab_bottom_text">127</p>
-            </div>
-           </div>
         </div>
         <div class="stats d-flex_column">
             <div class="stat_total d-flex_start" id="stat_total">
                 <p id="stat_total" class="total stat_type">Total</p>
                 <p id="stat_total_power" class="total stat_power">430</p>
-                <div class="stat_power_bar" >
+                <div class="stat_power_bar">
                     <p class="max_power">max 1530</p>
                     <div id="total_power_bar" class="power_bar"></div>
                 </div>
             </div>
             <div class="d-flex_column" id="stats">
-                
             </div>
-           
+        </div>
+        <div class="d-flex area_next_button" onclick="decrementPokemonShow()" id="area_next_button">
+            <div class="d-flex next_pokemon_button" id="next_pokemon_button">
+                <img class="icon_pokemon_button_left" src="img/left_arrow.png" alt="">
+            </div>
+        </div>
+        <div class="d-flex area_next_right_button" onclick="incrementPokemonShow()" id="area_next_right_button">
+            <div class="d-flex next_pokemon_right_button" id="next_pokemon_right_button">
+                <img class="icon_pokemon_button_right" src="img/left_arrow.png" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <img class="pokeball" src="img/pokeball.png" alt="">
+    <div onscroll="setNavbarBackground(), checkScrollHeight()" class="pokemon_card_top_start" id="pokemon_card_top_start">
+        
+        <div class="d-flex start_pokemon_cards" id="start_pokemon_cards">
+
 
         </div>
-        
-            <div class="d-flex area_next_button" onclick="decrementPokemonShow()" id="area_next_button">
-                <div class="d-flex next_pokemon_button" id="next_pokemon_button">
-                    <img class="icon_pokemon_button_left" src="img/left_arrow.png" alt="">
-                </div>
-            </div>
-            <div class="d-flex area_next_right_button" onclick="incrementPokemonShow()" id="area_next_right_button">
-                <div class="d-flex next_pokemon_right_button" id="next_pokemon_right_button" >
-                    <img class="icon_pokemon_button_right" src="img/left_arrow.png" alt="">
-                </div>
-            </div>
-        
-        
-        
     </div>
+
 
 </body>
 

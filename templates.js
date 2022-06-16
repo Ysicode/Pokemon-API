@@ -10,11 +10,12 @@ function getStats(stat, base_stat, i) {
  `
 }
 
-function setTypesOfCurrentPokemon(type) {
+function setTypesOfCurrentPokemon(type, i) {
     return `
-    <div id="type" class="type_bg d-flex type_${type}">
+    <div onclick="setInputValueForSelectedType(${i})" id="type" class="type_bg d-flex type_${type}">
         <img class="type_icon_pokemon_card" id="type_icon_pokemon_card" src="img/${type}.png" alt="">
         <p class="type_pokemon_card" id="type_pokemon_card">${type}</p>
     </div>
     `
 }
+
