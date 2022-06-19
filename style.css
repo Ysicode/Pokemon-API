@@ -167,6 +167,23 @@ p {
     cursor: pointer;
 }
 
+.area_heart_likedPokemons {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    display: flex;
+    position: absolute;
+    left: calc(100% - 35px - 5%);
+    cursor: pointer;
+}
+
+.number_likes {
+    font-size: 15px;
+    color: black;
+    position: absolute;
+    z-index: 99;
+}
+
 .name_line {
     padding-top: 10vh;
 }

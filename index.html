@@ -19,7 +19,7 @@
 </head>
 
 
-<body onload="getAllPokemons()">
+<body onload="getAllPokemons(), getLikes()">
     
     <div class="d-flex navbar" id="navbar">
         <h1 onclick="refreshAllPokemons()" id="title" class="title">POKEDEX</h1>
@@ -27,8 +27,10 @@
             src="img/left_arrow.png" alt="">
         <img id="search_icon" onclick="openSearch()" class="search_icon" src="img/search.png" alt="">
         <input onkeyup="renderSearch()" class="inputfield" type="text" id="inputfield" placeholder="search">
-        <img onclick=" getSearch()" class="heart_outline" id="heart_outline" src="img/heart_outline.png" alt="">
-        <img onclick=" likePokemon()" class="heart_full d-none" id="heart_full" src="img/heart_full.png" alt="">
+        <img onclick=" addLike()" class="heart_outline" id="heart_outline" src="img/heart_outline.png" alt="">
+        <img onclick=" removeLike()" class="heart_full d-none" id="heart_full" src="img/heart_full.png" alt="">
+        <div onclick="renderLikedPokemons()" class="d-flex area_heart_likedPokemons" id="likedPokemons">
+        </div>
     </div>
     <div>
         <div class="pokemon_card_top d-none" id="pokemon_card_top">
