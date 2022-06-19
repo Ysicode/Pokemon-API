@@ -337,11 +337,11 @@ function removeFillHeart() {
 }
 
 function showLoadMoreButton() {
-    document.getElementById('_area_load_more_button').classList.remove('d-none');
+    document.getElementById('load_more_button').classList.remove('d-none');
 }
 
 function removeLoadMoreButton() {
-    document.getElementById('_area_load_more_button').classList.add('d-none');
+    document.getElementById('load_more_button').classList.add('d-none');
 }
 
 function refreshLikeHeart() {
