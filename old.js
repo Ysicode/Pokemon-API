@@ -5,7 +5,21 @@ let allPokemons = [];
 let search = [];
 let searchIndex = 0;
 let searchFunction = false;
+let startLoadingRange = 0;
+let endLoadingRange = 20;
+let singleView = false;
+let pokemonSearch = [];
 
+function loadMore() {
+    startLoadingRange += 80;
+    if (allPokemons.length - endLoadingRange <= 80) {
+        endLoadingRange = allPokemons.length;
+        document.getElementById('_area_load_more_button').classList.add('d-none');
+    }else {
+        endLoadingRange += 80;
+    }
+    renderAllPokemons();
+}
 
 document.addEventListener('keydown', keyDown);
 
@@ -64,54 +78,51 @@ async function getAllPokemons() {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
         currentPokemon = await response.json();
+        console.log(currentPokemon);
         allPokemons.push(currentPokemon);
-        console.log(allPokemons.length);
-        setTimeout(() => {
+        if (i == 20) {
             renderAllPokemons();
-        }, 3000);
-        
-    }
-}
-
-function renderAllPokemons() {
-    let content = document.getElementById('start_pokemon_cards');
-    content.innerHTML = '';
-    for (let i = 0; i < 10; i++) {
-        const pokemon = allPokemons[i];
-        let name = pokemon.name;
-        let number = pokemon.id;
-        let pokemonPic = 
-        content.innerHTML += `
-        <div class=" start_pokemon_card" id="start_pokemon_card">
-        <div class="d-flex_space start_pokemon_card_headline">
-            <h2 id="name_start" class="start_card_name">${name}</h2>
-            <p id="id_start" class="start_card_number">#${number}</p>
-        </div>
-        <div id="start_types_line" class="start_types_line">
-            
-        </div>
-        <img class="start_pokemon_pic" id="start_pokemon_pic" src="" alt="">
-        <img class="pokeball_card" src="img/pokeball.png" alt="">
-
-    </div>
-        `;
+        }
     }
 }
 /////////////
 
+function renderAllPokemons() {
+    let content = document.getElementById('start_pokemon_cards');
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
+        const pokemon = allPokemons[i];
+        let name = pokemon['name'];
+        let number = pokemon['id'];
+        let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
+        content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
+    }
+}
+
+function setBackgroundPokemonCardAtStart(i) {
+    let backgroundColor = '';
+    backgroundColor = allPokemons[i]['types'][0]['type']['name']
+    return backgroundColor;
+}
+
+function renderPokemonCardAtStart(index) {
+    let typeStyle = '';
+    let types = allPokemons[index]['types'];
+    for (let i = 0; i < types.length; i++) {
+        let type = types[i]['type']['name'];
+        typeStyle += setTypeOfSelection(i, index, type);
+    }
+    return typeStyle;
+
+}
 //render pokemon card with main data and sets card style
 function renderPokemonCard() {
+    document.getElementById('pokemon_card_top_start').classList.add('d-none');
+    openSingleView();
     renderPokemonStyle();
     let types = currentPokemon['types'];
     for (let i = 0; i < types.length; i++) {
-        let type = currentPokemon['types'][i]['type']['name'];
+        let type = types[i]['type']['name'];
         document.getElementById('types_line').innerHTML += setTypesOfCurrentPokemon(type, i);
-        document.getElementById('start_types_line').innerHTML += `
-            <div onclick="setInputValueForSelectedType()" id="type" class="type_start d-flex type_${type}">
-                <img class="icon_start_card" id="type_icon_pokemon_card" src="img/${type}.png" alt="">
-                <p class="type_pokemon_card" id="type_pokemon_card">${type}</p>
-            </div>
-        `;
     }
     renderPokemonInfo();
     setNewBackgroundColor();
@@ -125,7 +136,7 @@ function filterPokemonCard() {
     for (let i = 0; i < allPokemons.length; i++) {
         if (allPokemons[i].name.toLowerCase().includes(search) ||
             allPokemons[i].types[0].type.name.toLowerCase().includes(search) ||
-            allPokemons[i]['id'].toString().includes(search)) {
+            allPokemons[i]['id'].toString() == search) {
             addPokemonsToSearch(i)
         } else {
             searchNotFoundAnimation();
@@ -135,58 +146,38 @@ function filterPokemonCard() {
 
 function addPokemonsToSearch(i) {
     search.push(allPokemons[i].id);
-    searchFunction = true;
     searchIndex = 0;
-    pokemonCardId = search[0];
+    if (searchFunction == true) {
+        pokemonCardId = search[0];
+    }
     loadPokemon();
     closeSearch();
 }
 
-function searchNotFoundAnimation() {
-    document.getElementById('inputfield').style.width = '40%';
-    document.getElementById('inputfield').style.left = '30%';
-    setTimeout(() => {
-        document.getElementById('inputfield').style.width = '47%';
-        document.getElementById('inputfield').style.left = '27%';
-    }, 100);
-}
-
-function setInputValueForSelectedType(i) {
+function setInputValueForSelectedPokemon(i) {
     search = [];
-    console.log('der Index des types ist', i);
-    let inputvalue = allPokemons[pokemonCardId - 1]['types'][[i]]['type']['name'];
-    console.log('its the type', inputvalue);
-    console.log('pokemon id is', pokemonCardId);
+    let inputvalue = allPokemons[i]['id'];
+    console.log(allPokemons[i]['id']);
+    pokemonCardId = inputvalue;
     let typeSearch = document.getElementById('inputfield');
     typeSearch.value = inputvalue;
     filterPokemonCard();
 }
+
+function setInputValueForSelectedType(i, index) {
+    search = [];
+    let typeSearch = document.getElementById('inputfield');
+    if (singleView == true) {
+        let inputvalue = currentPokemon['types'][[i]]['type']['name'];
+        typeSearch.value = inputvalue;
+    } else {
+        let inputvalue = allPokemons[index]['types'][[i]]['type']['name'];
+        typeSearch.value = inputvalue;
+    }
+    searchFunction = true;
+    filterPokemonCard();
+}
 ///////////
-
-function renderPokemonStyle() {
-    color = currentPokemon['types'][0]['type']['name'];
-    document.getElementById('types_line').innerHTML = '';
-    document.getElementById('current_name').innerHTML = currentPokemon['name'];
-    document.getElementById('pokemon_card_pic').src = currentPokemon['sprites']['other']['dream_world']['front_default'];
-    document.getElementById('pokemon_id').innerHTML = `#${currentPokemon['id']}`;
-
-
-    document.getElementById('start_types_line').innerHTML = '';
-    document.getElementById('name_start').innerHTML = currentPokemon['name'];
-    document.getElementById('start_pokemon_pic').src = currentPokemon['sprites']['other']['dream_world']['front_default'];
-    document.getElementById('id_start').innerHTML = `#${currentPokemon['id']}`;
-}
-
-function setNewBackgroundColor() {
-    let style = document.getElementById('pokemon_card_top');
-    style.className = '';
-    document.getElementById('pokemon_card_top').classList.add(`type_${color}`, 'pokemon_card_top');
-
-    let styleStartCcard = document.getElementById('start_pokemon_card');
-    styleStartCcard.className = '';
-    document.getElementById('start_pokemon_card').classList.add(`type_${color}`, 'start_pokemon_card');
-}
-
 
 //render Pokemon Information with facts as size width an moves
 function renderPokemonInfo() {
@@ -194,11 +185,6 @@ function renderPokemonInfo() {
     getHeights();
     getMoves();
     renderPokemonStats();
-}
-
-function getMoves() {
-    let moves = currentPokemon['moves'];
-    document.getElementById('moves').innerHTML = moves.length;
 }
 
 function getHeights() {
@@ -213,6 +199,11 @@ function getWeights() {
     let pounds = kilo * 2.20462
     document.getElementById('weight_kg').innerHTML = `${currentPokemon['weight']}kg`;
     document.getElementById('weight_lbs').innerHTML = ` ${Math.floor(pounds.toFixed(2))}lbs`;
+}
+
+function getMoves() {
+    let moves = currentPokemon['moves'];
+    document.getElementById('moves').innerHTML = moves.length;
 }
 ///////////
 
@@ -268,7 +259,7 @@ function setNavbarBackground() {
 }
 
 function openSearch() {
-    searchFunction = false;
+    searchFunction = true;
     search = [];
     document.getElementById('search_icon').classList.add('d-none');
     document.getElementById('inputfield').classList.add('inputfield_open');
@@ -279,4 +270,47 @@ function closeSearch() {
     document.getElementById('inputfield').value = '';
     document.getElementById('inputfield').classList.remove('inputfield_open');
     document.getElementById('search_icon').classList.remove('d-none');
+}
+
+function searchNotFoundAnimation() {
+    document.getElementById('inputfield').style.width = '40%';
+    document.getElementById('inputfield').style.left = '30%';
+    setTimeout(() => {
+        document.getElementById('inputfield').style.width = '47%';
+        document.getElementById('inputfield').style.left = '27%';
+    }, 100);
+}
+
+function openSingleView() {
+    singleView = true;
+    document.getElementById('pokemon_card_top').classList.remove('d-none');
+    document.getElementById('pokemon_card_bottom').classList.remove('d-none');
+    document.getElementById('title').classList.add('d-none');
+    document.getElementById('left_arrow').classList.remove('d-none');
+    document.getElementById('navbar').classList.remove('navbarscroll');
+}
+
+function closeSingleView() {
+    singleView = false;
+    searchFunction = false;
+    setNavbarBackground();
+    document.getElementById('pokemon_card_top_start').classList.remove('d-none');
+    document.getElementById('pokemon_card_top').classList.add('d-none');
+    document.getElementById('pokemon_card_bottom').classList.add('d-none');
+    document.getElementById('title').classList.remove('d-none');
+    document.getElementById('left_arrow').classList.add('d-none');
+}
+
+function renderPokemonStyle() {
+    color = currentPokemon['types'][0]['type']['name'];
+    document.getElementById('types_line').innerHTML = '';
+    document.getElementById('current_name').innerHTML = currentPokemon['name'];
+    document.getElementById('pokemon_card_pic').src = currentPokemon['sprites']['other']['dream_world']['front_default'];
+    document.getElementById('pokemon_id').innerHTML = `#${currentPokemon['id']}`;
+}
+
+function setNewBackgroundColor() {
+    let style = document.getElementById('pokemon_card_top');
+    style.className = '';
+    document.getElementById('pokemon_card_top').classList.add(`type_${color}`, 'pokemon_card_top');
 }
