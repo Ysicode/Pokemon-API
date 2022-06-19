@@ -5,23 +5,21 @@ let color;
 let id;
 let allPokemons = [];
 let liked = [];
-let searchIndex = 0;
-let searchFunction = false;
-let listView = true;
 
-function refreshLikeHeart() {
-    document.getElementById('heart_full').classList.add('d-none');
-    document.getElementById('heart_outline').classList.remove('d-none')
+document.addEventListener('keydown', keyDown);
+
+function keyDown(e) {
+    if (e.key === "Enter") {
+        renderSearch();
+        closeSearch();
+    }
 }
 
 function getLikes() {
     let likes = document.getElementById('likedPokemons');
     likes.innerHTML = '';
     let number = liked.length;
-    likes.innerHTML = `
-    <img class="heart_liked_pokemons" src="img/heart_full.png" alt="">
-            <p class="number_likes">${number}</p>
-    `;
+    likes.innerHTML = showLikesNumber(number);
 }
 
 function renderLikedPokemons() {
@@ -31,7 +29,7 @@ function renderLikedPokemons() {
         for (let j = 0; j < liked.length; j++) {
             if (allPokemons[i]['id'] == liked[j]) {
                 showSearch(content, i);
-            }   
+            }
         }
     }
     removeLoadMoreButton();
@@ -39,13 +37,8 @@ function renderLikedPokemons() {
 }
 
 function addLike() {
-        liked.push(id + 1);
-        changeHeartStyle();
-}
-
-function showLikesNumber() {
-    let likesNumber = liked.length;
-
+    liked.push(id + 1);
+    changeHeartStyle();
 }
 
 function removeLike() {
@@ -63,36 +56,11 @@ function loadMore() {
     startLoadingRange += 50;
     if (allPokemons.length - endLoadingRange <= 50) {
         endLoadingRange = allPokemons.length;
-        document.getElementById('_area_load_more_button').classList.add('d-none');
+        removeLoadMoreButton();
     } else {
         endLoadingRange += 50;
     }
     renderAllPokemons();
-}
-
-document.addEventListener('keydown', keyDown);
-
-function keyDown(e) {
-    if (e.key === "Enter") {
-        renderSearch();
-        closeSearch();
-    }
-}
-
-function decrementPokemonShow() {
-    if (id == 0) {
-        id = 649;
-    }
-    id--;
-    renderPokemonCard();
-}
-
-function incrementPokemonShow() {
-    if (id == 648) {
-        id = -1;
-    }
-    id++;
-    renderPokemonCard();
 }
 
 async function getAllPokemons() {
@@ -156,6 +124,22 @@ function renderPokemonCard() {
     }
     renderPokemonInfo(id);
     setNewBackgroundColor(id);
+}
+
+function decrementPokemonShow() {
+    if (id == 0) {
+        id = 649;
+    }
+    id--;
+    renderPokemonCard();
+}
+
+function incrementPokemonShow() {
+    if (id == 648) {
+        id = -1;
+    }
+    id++;
+    renderPokemonCard();
 }
 
 function renderSearch() {
@@ -257,7 +241,6 @@ function checkHighestStat(stats) {
     let array_stats = stats.map(sum => sum.base_stat);
     let heighest_stat = Math.max(...array_stats);
     let index = array_stats.indexOf(heighest_stat);
-    console.log('color before add', color);
     document.getElementById(`power_bar${index}`).classList.add(`type_${color}`);
 }
 
@@ -266,14 +249,10 @@ function changeHeartStyle() {
     console.log('liked Id is', id + 1);
     console.log('filtered Id', filtered);
     if (filtered == id + 1) {
-        console.log('same');
-        document.getElementById('heart_full').classList.remove('d-none');
-        document.getElementById('heart_outline').classList.add('d-none');
+        fillHeart();
     }
     else {
-        console.log('not same');
-        document.getElementById('heart_outline').classList.remove('d-none');
-        document.getElementById('heart_full').classList.add('d-none');
+        removeFillHeart();
     }
 }
 
@@ -308,7 +287,6 @@ function searchNotFoundAnimation() {
 }
 
 function openSingleView() {
-    listView = false;
     changeHeartStyle();
     document.getElementById('likedPokemons').classList.add('d-none')
     document.getElementById('pokemon_card_top').classList.remove('d-none');
@@ -319,7 +297,6 @@ function openSingleView() {
 }
 
 function closeSingleView() {
-    listView = true;
     getLikes();
     refreshLikeHeart();
     setNavbarBackground();
@@ -349,10 +326,25 @@ function closeListView() {
     document.getElementById('pokemon_card_top_start').classList.add('d-none');
 }
 
+function fillHeart() {
+    document.getElementById('heart_full').classList.remove('d-none');
+    document.getElementById('heart_outline').classList.add('d-none');
+}
+
+function removeFillHeart() {
+    document.getElementById('heart_outline').classList.remove('d-none');
+    document.getElementById('heart_full').classList.add('d-none');
+}
+
 function showLoadMoreButton() {
     document.getElementById('_area_load_more_button').classList.remove('d-none');
 }
 
 function removeLoadMoreButton() {
     document.getElementById('_area_load_more_button').classList.add('d-none');
+}
+
+function refreshLikeHeart() {
+    document.getElementById('heart_full').classList.add('d-none');
+    document.getElementById('heart_outline').classList.remove('d-none')
 }

@@ -47,3 +47,10 @@ function setTypeOfSelection(j, i, type) {
     </div>
 `
 }
+
+function showLikesNumber(number) {
+    return `
+    <img class="heart_liked_pokemons" src="img/heart_full.png" alt="">
+            <p class="number_likes">${number}</p>
+    `
+}
