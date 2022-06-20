@@ -54,3 +54,21 @@ function showLikesNumber(number) {
             <p class="number_likes">${number}</p>
     `
 }
+
+function showSearchNotFound() {
+    return `
+        <div class="area_search_not_found">
+            <img class="search_icon_not_found" src="img/search.png">
+            <p class="search_not_found">Search not found </p>
+        </div>
+`
+}
+
+function showLikeSomePokemons() {
+    return `
+    <div class="area_search_not_found">
+        <img class="search_icon_not_found" src="img/heart_outline.png">
+        <p class="search_not_found">Like Some Pokemons</p>
+    </div>
+`
+}

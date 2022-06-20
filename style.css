@@ -5,6 +5,35 @@ body {
     background-color: #131313;
 }
 
+.filter_button {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    background: blanchedalmond;
+    color: black;
+    z-index: 999;
+    width: 200px;
+    height: 70px;
+}
+
+.area_search_not_found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+    flex-direction: column;
+}
+
+.search_icon_not_found {
+    width: 70px;
+    height: 70px;
+}
+
+.search_not_found {
+    font-size: 40px;
+    color: white;
+}
+
 .load_more_button {
     width: 100px;
     height: 100px;

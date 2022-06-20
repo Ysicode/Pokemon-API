@@ -1,10 +1,24 @@
-
 let startLoadingRange = 0;
 let endLoadingRange = 50;
 let color;
 let id;
 let allPokemons = [];
 let liked = [];
+
+function filterAllPokemons() {
+    let filtered = allPokemons.filter(pokemon => pokemon.stats[0]['base_stat'] > 150)
+    let content = document.getElementById('start_pokemon_cards');
+    console.log(filtered);
+    content.innerHTML = '';
+    for (let i = 0; i < allPokemons.length; i++) {
+        for (let j = 0; j < filtered.length; j++) {
+            if (allPokemons[i]['id'] == filtered[j]['id']) {
+                showSearch(content, i);
+                removeLoadMoreButton();
+            }
+        }
+    }
+}
 
 document.addEventListener('keydown', keyDown);
 
@@ -46,6 +60,7 @@ function renderAllPokemons() {
         let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
         content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
     }
+    console.log(allPokemons[0]);
 }
 
 function getBackgroundColourAtListView(i) {
@@ -83,14 +98,20 @@ function getLikes() {
 }
 
 function renderLikedPokemons() {
+    let noLikes = true;
     let content = document.getElementById('start_pokemon_cards');
     content.innerHTML = '';
     for (let i = 0; i < allPokemons.length; i++) {
         for (let j = 0; j < liked.length; j++) {
             if (allPokemons[i]['id'] == liked[j]) {
+                noLikes = false;
                 showSearch(content, i);
             }
         }
+    }
+    if (noLikes == true) {
+        console.log('also true');
+        content.innerHTML = showLikeSomePokemons();
     }
     removeLoadMoreButton();
     showLikesNumber();
@@ -143,6 +164,16 @@ function incrementPokemonShow() {
 
 function renderSearch() {
     let search = document.getElementById('inputfield').value;
+    if (search == '') {
+        refreshAllPokemons();
+    } else {
+        searchForNameTypeId(search);
+        removeLoadMoreButton();
+    }
+}
+
+function searchForNameTypeId(search) {
+    let notFound = true;
     let content = document.getElementById('start_pokemon_cards');
     content.innerHTML = '';
     search = search.toLowerCase();
@@ -150,11 +181,16 @@ function renderSearch() {
         if (allPokemons[i].name.toLowerCase() == (search) ||
             allPokemons[i]['id'].toString() == (search) ||
             allPokemons[i].types[0].type['name'].toLowerCase() == (search)) {
+            console.log('true');
+            notFound = false;
             showSearch(content, i);
             closeSingleView();
         }
     }
-    removeLoadMoreButton();
+    if (notFound == true) {
+        console.log('also true');
+        content.innerHTML = showSearchNotFound();
+    }
 }
 
 function showSearch(content, i) {
