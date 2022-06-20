@@ -15,6 +15,66 @@ function keyDown(e) {
     }
 }
 
+function refreshAllPokemons() {
+    let content = document.getElementById('start_pokemon_cards');
+    content.innerHTML = '';
+    startLoadingRange = 0;
+    endLoadingRange = 50;
+    showLoadMoreButton();
+    renderAllPokemons();
+}
+
+async function getAllPokemons() {
+    for (let i = 1; i < 650; i++) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        let response = await fetch(url);
+        currentPokemon = await response.json();
+        allPokemons.push(currentPokemon);
+        if (i == 50) {
+            renderAllPokemons();
+        }
+    }
+}
+
+function renderAllPokemons() {
+    refreshLikeHeart();
+    let content = document.getElementById('start_pokemon_cards');
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
+        const pokemon = allPokemons[i];
+        let name = pokemon['name'];
+        let number = pokemon['id'];
+        let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
+        content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
+    }
+}
+
+function getBackgroundColourAtListView(i) {
+    let backgroundColor = '';
+    backgroundColor = allPokemons[i]['types'][0]['type']['name']
+    return backgroundColor;
+}
+
+function renderPokemonCardAtListView(i) {
+    let typeStyle = '';
+    let types = allPokemons[i]['types'];
+    for (let j = 0; j < types.length; j++) {
+        let type = types[j]['type']['name'];
+        typeStyle += setTypeOfSelection(j, i, type);
+    }
+    return typeStyle;
+}
+
+function loadMore() {
+    startLoadingRange += 50;
+    if (allPokemons.length - endLoadingRange <= 50) {
+        endLoadingRange = allPokemons.length;
+        removeLoadMoreButton();
+    } else {
+        endLoadingRange += 50;
+    }
+    renderAllPokemons();
+}
+
 function getLikes() {
     let likes = document.getElementById('likedPokemons');
     likes.innerHTML = '';
@@ -45,71 +105,10 @@ function removeLike() {
     for (let i = 0; i < liked.length; i++) {
         const likedId = liked[i];
         if (likedId == id + 1) {
-            console.log('its sliced')
             liked.splice(i, 1);
         }
     }
     changeHeartStyle();
-}
-
-function loadMore() {
-    startLoadingRange += 50;
-    if (allPokemons.length - endLoadingRange <= 50) {
-        endLoadingRange = allPokemons.length;
-        removeLoadMoreButton();
-    } else {
-        endLoadingRange += 50;
-    }
-    renderAllPokemons();
-}
-
-async function getAllPokemons() {
-    for (let i = 1; i < 650; i++) {
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        let response = await fetch(url);
-        currentPokemon = await response.json();
-        allPokemons.push(currentPokemon);
-        if (i == 50) {
-            renderAllPokemons();
-        }
-    }
-}
-
-function refreshAllPokemons() {
-    let content = document.getElementById('start_pokemon_cards');
-    content.innerHTML = '';
-    startLoadingRange = 0;
-    endLoadingRange = 50;
-    showLoadMoreButton();
-    renderAllPokemons();
-}
-
-function renderAllPokemons() {
-    refreshLikeHeart();
-    let content = document.getElementById('start_pokemon_cards');
-    for (let i = startLoadingRange; i < endLoadingRange; i++) {
-        const pokemon = allPokemons[i];
-        let name = pokemon['name'];
-        let number = pokemon['id'];
-        let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
-        content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
-    }
-}
-
-function getBackgroundColourAtListView(i) {
-    let backgroundColor = '';
-    backgroundColor = allPokemons[i]['types'][0]['type']['name']
-    return backgroundColor;
-}
-
-function renderPokemonCardAtListView(i) {
-    let typeStyle = '';
-    let types = allPokemons[i]['types'];
-    for (let j = 0; j < types.length; j++) {
-        let type = types[j]['type']['name'];
-        typeStyle += setTypeOfSelection(j, i, type);
-    }
-    return typeStyle;
 }
 
 function renderPokemonCard() {
@@ -246,8 +245,6 @@ function checkHighestStat(stats) {
 
 function changeHeartStyle() {
     const filtered = liked.filter(element => element === id + 1);
-    console.log('liked Id is', id + 1);
-    console.log('filtered Id', filtered);
     if (filtered == id + 1) {
         fillHeart();
     }
