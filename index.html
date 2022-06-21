@@ -20,7 +20,7 @@
 
 
 <body onload="getAllPokemons(), getLikes()">
-    
+
     <div class="d-flex navbar" id="navbar">
         <h1 onclick="refreshAllPokemons()" id="title" class="title">POKEDEX</h1>
         <img onclick="closeSingleView()" class="left_arrow d-none" id="left_arrow" class="left_arrow"
@@ -113,8 +113,43 @@
         </div>
     </div>
 
-<button onclick="filterAllPokemons()" class="filter_button">Filter</button>
+    <div onclick="toggleFilter()" class="filter_button d-flex" id="filter_button">
+    <img src="img/filter.png" alt="">
+    </div>
 
+    <div class="d-flex_end filter_overlay d-none" id="filter_overlay">
+        <div class="filter_navbar d-flex" onclick="event.stopPropagation()">
+            <div class="area_range_filter">
+                <h2 class="headline_filter">Filter all Pokemons</h3>
+                    <div class="area_ranges" id="area_range">
+                    </div>
+            </div>
+            <div class="area_sort_buttons">
+                <div class="sort_kind1">
+                    <h3>Filter by TYPE</h3>
+                    <button onclick="filterAllByType('fire')" class="usefilter_button type_fire">fire</button>
+                    <button onclick="filterAllByType('normal')" class="usefilter_button type_normal">normal</button>
+                    <button onclick="filterAllByType('electric')" class="usefilter_button type_electric">electric</button>
+                    <button onclick="filterAllByType('water')" class="usefilter_button type_water">water</button>
+                </div>
+                <div class="sort_kind">
+                    <h3>Sort by #ID</h3>
+                    <button onclick="sortById(1, -1)" class="usefilter_button">1 - 649</button>
+                    <button onclick="sortById(-1, 1)" class="usefilter_button">649 - 1</button>
+                </div>
+                <div class="sort_kind">
+                    <h3>Sort by TYPE</h3>
+                    <button onclick="sortByType(1, -1)" class="usefilter_button">A - Z</button>
+                    <button onclick="sortByType(-1, 1)" class="usefilter_button">Z - A</button>
+                </div>
+                <div class="sort_kind">
+                    <h3>Sort by NAME</h3>
+                    <button onclick="sortByName(1, -1)" class="usefilter_button">A - Z</button>
+                    <button onclick="sortByName(-1, 1)" class="usefilter_button">Z - A</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -5,19 +5,113 @@ let id;
 let allPokemons = [];
 let liked = [];
 
-function filterAllPokemons() {
-    let filtered = allPokemons.filter(pokemon => pokemon.stats[0]['base_stat'] > 150)
+function toggleFilter() {
+    document.getElementById('filter_overlay').classList.toggle('d-none');
+    showStatsFilter();
+}
+
+function showStatsFilter() {
+    let stats = allPokemons[4]['stats'];
+    let content = document.getElementById('area_range');
+    content.innerHTML = '';
+    for (let i = 0; i < stats.length; i++) {
+        const stat = stats[i]['stat']['name'];
+        content.innerHTML += `
+           <div class="d-flex area_range">
+           <p class="stat_filter">${stat}</p>
+           <p class="bigger_than_sign">></p>
+           <p class="stat_number" id="stat_number${i}">0</p>
+           <input id="rangebar${i}" onchange="setValue(${i})" type="range" min="0" max="255" value="0" class="rangebar" >
+           </div>
+           `;
+    }
+}
+
+function setValue(i) {
+    for (let k = 0; k < 6; k++) {  
+        if (k != i) {
+            document.getElementById(`rangebar${k}`).value = 0; 
+            document.getElementById(`stat_number${k}`).innerHTML = '0'; 
+        }
+    }
+    let range = document.getElementById(`rangebar${i}`).value;
+    document.getElementById(`stat_number${i}`).innerHTML = `${range}`;
+    filterAllPokemons(i, range);
+}
+
+function filterAllPokemons(i, range) {
+    let filtered = [];
+    filtered = allPokemons.filter(pokemon => pokemon.stats[i]['base_stat'] > `${range}`)
     let content = document.getElementById('start_pokemon_cards');
-    console.log(filtered);
+    content.innerHTML = '';
+    for (let i = 0; i < allPokemons.length; i++) {
+        for (let j = 0; j < filtered.length; j++) {
+            if (j <= 50) {
+                if (allPokemons[i]['id'] == filtered[j]['id']) {
+                    showSearch(content, i);
+                    removeLoadMoreButton();
+                }
+            }
+        }
+    }
+}
+
+function filterAllByType(type) {
+    let filtered = [];
+    filtered = allPokemons.filter(pokemon => pokemon.types[0].type.name == `${type}`)
+    let content = document.getElementById('start_pokemon_cards');
     content.innerHTML = '';
     for (let i = 0; i < allPokemons.length; i++) {
         for (let j = 0; j < filtered.length; j++) {
             if (allPokemons[i]['id'] == filtered[j]['id']) {
                 showSearch(content, i);
-                removeLoadMoreButton();
             }
         }
     }
+    removeLoadMoreButton();
+    toggleFilter();
+}
+
+function sortByType(x, y) {
+    let sorted = allPokemons.sort((a, b) => a.types[0]['type']['name'] > b.types[0]['type']['name'] ? `${x}` : `${y}`);
+    let content = document.getElementById('start_pokemon_cards');
+    content.innerHTML = '';
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
+        for (let j = 0; j < sorted.length; j++) {
+            if (allPokemons[i]['id'] == sorted[j]['id']) {
+                showSearch(content, i);
+            }
+        }
+    }
+    toggleFilter();
+}
+
+function sortByName(x, y) {
+    let sorted = allPokemons.sort((a, b) => a.name > b.name ? `${x}` : `${y}`);
+    let content = document.getElementById('start_pokemon_cards');
+    content.innerHTML = '';
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
+        for (let j = 0; j < sorted.length; j++) {
+            if (allPokemons[i]['id'] == sorted[j]['id']) {
+                showSearch(content, i);
+            }
+        }
+    }
+    toggleFilter();
+}
+
+function sortById(x, y) {
+    let sorted = allPokemons.sort((a, b) => a.id > b.id ? `${x}` : `${y}`);
+    let content = document.getElementById('start_pokemon_cards');
+    content.innerHTML = '';
+    for (let i = startLoadingRange; i < endLoadingRange; i++) {
+        for (let j = 0; j < sorted.length; j++) {
+            if (allPokemons[i]['id'] == sorted[j]['id']) {
+                showSearch(content, i);
+            }
+        }
+    }
+    toggleFilter();
 }
 
 document.addEventListener('keydown', keyDown);
@@ -60,7 +154,6 @@ function renderAllPokemons() {
         let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
         content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
     }
-    console.log(allPokemons[0]);
 }
 
 function getBackgroundColourAtListView(i) {
@@ -110,7 +203,6 @@ function renderLikedPokemons() {
         }
     }
     if (noLikes == true) {
-        console.log('also true');
         content.innerHTML = showLikeSomePokemons();
     }
     removeLoadMoreButton();
@@ -181,14 +273,12 @@ function searchForNameTypeId(search) {
         if (allPokemons[i].name.toLowerCase() == (search) ||
             allPokemons[i]['id'].toString() == (search) ||
             allPokemons[i].types[0].type['name'].toLowerCase() == (search)) {
-            console.log('true');
             notFound = false;
             showSearch(content, i);
             closeSingleView();
         }
     }
     if (notFound == true) {
-        console.log('also true');
         content.innerHTML = showSearchNotFound();
     }
 }
@@ -321,6 +411,7 @@ function searchNotFoundAnimation() {
 
 function openSingleView() {
     changeHeartStyle();
+    document.getElementById('filter_button').classList.add('d-none');
     document.getElementById('likedPokemons').classList.add('d-none')
     document.getElementById('pokemon_card_top').classList.remove('d-none');
     document.getElementById('pokemon_card_bottom').classList.remove('d-none');
@@ -333,6 +424,7 @@ function closeSingleView() {
     getLikes();
     refreshLikeHeart();
     setNavbarBackground();
+    document.getElementById('filter_button').classList.remove('d-none');
     document.getElementById('likedPokemons').classList.remove('d-none')
     document.getElementById('pokemon_card_top_start').classList.remove('d-none');
     document.getElementById('pokemon_card_top').classList.add('d-none');

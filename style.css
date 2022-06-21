@@ -5,15 +5,162 @@ body {
     background-color: #131313;
 }
 
+
 .filter_button {
+    border-radius: 100px;
     position: absolute;
+    padding: 6px;
+    box-shadow: 0px 0px 5px 1px white;
     right: 5%;
     bottom: 5%;
-    background: blanchedalmond;
+    background: rgb(50 50 50);
     color: black;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.filter_button img {
+    width: 30px;
+    height: 30px;
+}
+
+.filter_button:hover {
+    background: rgb(39, 38, 38);
+}
+
+.filter_overlay {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     z-index: 999;
-    width: 200px;
-    height: 70px;
+    align-items: flex-end;
+}
+
+.filter_navbar {
+    background: rgba(36, 35, 35, 0.794);
+    width: 80%;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.area_range_filter {
+    align-items: flex-end;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.area_ranges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.area_range {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.headline_filter {
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.stat_filter {
+    font-size: 40px;
+    font-weight: 500;
+    color: white;
+    margin-right: 15px;
+}
+
+.bigger_than_sign {
+    font-size: 30px;
+    font-weight: 500;
+    color: white;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.stat_number {
+    font-size: 35px;
+    font-weight: 500;
+    color: white;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.rangebar {
+    -webkit-appearance: none;
+    width: 100%;
+    width: 500px;
+    height: 30px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.8;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.rangebar:hover {
+    opacity: 1;
+}
+
+.rangebar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    border-radius: 3px;
+    height: 30px;
+    background: rgb(246 64 64);
+    cursor: pointer;
+}
+
+.rangebar::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: rgb(246 64 64);
+    cursor: pointer;
+}
+
+.area_sort_buttons {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: flex-end;
+}
+
+.sort_kind {
+    margin-bottom: 25px;
+    margin-bottom: 25px;
+}
+
+.sort_kind1 {
+    margin-bottom: 20px;
+    margin-bottom: 60px;
+}
+
+.usefilter_button {
+    width: 13rem;
+    height: 4rem;
+    font-size: 25px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 5px;
+    color: white;
+    background: rgb(96 125 129);
+    cursor: pointer;
+}
+
+.usefilter_button:hover {
+    background: rgb(109, 137, 141);
 }
 
 .area_search_not_found {
@@ -81,6 +228,15 @@ h2 {
     font-size: 30px;
     transform: scale(1);
     transition: all 150ms ease-in-out;
+}
+
+h3 {
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 30px;
+    color: white;
+    text-align: end;
+    font-weight: 500;
 }
 
 p {
@@ -754,6 +910,34 @@ p {
     background: rgb(47 87 96);
 }
 
+@media (max-width: 1500px) {
+    .headline_filter, h3 {
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    .stat_filter, .bigger_than_sign, .stat_number {
+        font-size: 25px;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .rangebar {
+        height: 25px;
+        width: 400px;
+    }
+
+    .rangebar::-webkit-slider-thumb {
+        height: 25px;
+    }
+
+    .usefilter_button {
+        width: 7rem;
+        height: 4rem;
+        font-size: 19px;
+    }
+
+}
 
 
 @media (max-width: 1200px) {
@@ -761,6 +945,11 @@ p {
         width: 300px;
         height: 300px;
     }
+
+    .filter_navbar {
+        width: 100%;
+    }
+
 }
 
 @media (max-width: 950px) {
@@ -790,11 +979,19 @@ p {
     .start_pokemon_card {
         width: 40%;
     }
+
+    .rangebar {
+        width: 200px;
+    }
 }
 
 @media (max-width: 600px) {
     .start_pokemon_card {
         width: 85%;
+    }
+
+    .area_range_filter, .area_sort_buttons {
+        width: 95%;
     }
 }
 
@@ -843,6 +1040,31 @@ p {
 }
 
 @media (max-width: 550px) {
+    .headline_filter, h3 {
+        font-size: 17px;
+        font-weight: 400;
+    }
+
+    .stat_filter, .bigger_than_sign, .stat_number {
+        font-size: 15px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    .rangebar {
+        height: 15px;
+        width: 200px;
+    }
+
+    .rangebar::-webkit-slider-thumb {
+        height: 15px;
+    }
+
+    .usefilter_button {
+        width: 5rem;
+        height: 3rem;
+        font-size: 15px;
+    }
 
     .pokeball {
         display: none;
@@ -991,6 +1213,7 @@ p {
     .start_pokemon_cards {
         padding-top: 125px;
     }
+
 }
 
 @media (min-height: 1200px) {
@@ -1071,9 +1294,50 @@ p {
 
 }
 
+@media (max-height: 1000px) {
+    .filter_navbar {
+        justify-content: flex-start;
+    }
+
+    .area_range_filter {
+        margin-top: 50px;
+    }
+
+    .headline_filter {
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        margin-top: 5px;
+    }
+
+    .sort_kind1 {
+        margin-bottom: 20px;
+    }
+
+    .sort_kind {
+        margin-bottom: 20px;
+    }
+}
+
 @media (max-height: 700px) {
+
     .title {
         font-size: 25px;
+    }
+
+    .filter_button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .usefilter_button {
+        height: 2rem;
+    }
+
+    .filter_button img {
+        width: 20px;
+        height: 20px;
     }
 
     .search_icon {
@@ -1101,6 +1365,10 @@ p {
         left: calc(100% - 25px - 5%);
         width: 25px;
         height: 25px;
+    }
+
+    .navbar {
+        height: 11vh;
     }
 
     .number_likes {
@@ -1214,6 +1482,43 @@ p {
     }
 
 
+}
+
+@media (max-height: 400px) {
+    .filter_navbar {
+        flex-direction: row-reverse;
+    }
+
+    .headline_filter, h3 {
+        font-size: 17px;
+    }
+
+    .stat_filter, .bigger_than_sign, .stat_number {
+        font-size: 13px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .rangebar {
+        width: 160px;
+        height: 18px;
+    }
+
+    .rangebar::-webkit-slider-thumb {
+        height: 18px;
+        width: 7px;
+    }
+
+    .area_range_filter {
+        margin-right: 16px;
+        margin-top: 0px;
+    }
+
+    .usefilter_button {
+        height: 1.8rem;
+        width: 4rem;
+        font-size: 13px;
+    }
 }
 
 @media (max-height: 350px) {
