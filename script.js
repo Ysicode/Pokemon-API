@@ -21,10 +21,10 @@ function showStatsFilter() {
 }
 
 function setValue(i) {
-    for (let k = 0; k < 6; k++) {  
+    for (let k = 0; k < 6; k++) {
         if (k != i) {
-            document.getElementById(`rangebar${k}`).value = 0; 
-            document.getElementById(`stat_number${k}`).innerHTML = '0'; 
+            document.getElementById(`rangebar${k}`).value = 0;
+            document.getElementById(`stat_number${k}`).innerHTML = '0';
         }
     }
     let range = document.getElementById(`rangebar${i}`).value;
@@ -147,6 +147,7 @@ function renderAllPokemons() {
         let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
         content.innerHTML += showAllPokemons(i, name, number, pokemonPic);
     }
+    console.log(allPokemons[0]);
 }
 
 function getBackgroundColourAtListView(i) {
@@ -263,7 +264,7 @@ function searchForNameTypeId(search) {
     content.innerHTML = '';
     search = search.toLowerCase();
     for (let i = 0; i < allPokemons.length; i++) {
-        if (allPokemons[i].name.toLowerCase() == (search) ||
+        if (allPokemons[i].name.toLowerCase().startsWith(search) ||
             allPokemons[i]['id'].toString() == (search) ||
             allPokemons[i].types[0].type['name'].toLowerCase() == (search)) {
             notFound = false;
@@ -271,7 +272,7 @@ function searchForNameTypeId(search) {
             closeSingleView();
         }
     }
-    if (notFound == true) {
+    if (notFound) {
         content.innerHTML = showSearchNotFound();
     }
 }
@@ -470,4 +471,13 @@ function addLoadMoreButton() {
 function refreshLikeHeart() {
     document.getElementById('heart_full').classList.add('d-none');
     document.getElementById('heart_outline').classList.remove('d-none')
+}
+
+function addJSON() {
+    allPokemons[0]['liked'] = true;
+    allPokemons[0]['species']['morenames'] = ['Simon, Malia'];
+    console.log(allPokemons[0]['species']['morenames']);
+    allPokemons[0]['species']['name'] = 'Simon';
+    allPokemons[0]['species']['morenames'][1] = 'Simon, Jonas';
+    console.log(allPokemons[0]);
 }
