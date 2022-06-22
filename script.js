@@ -16,14 +16,7 @@ function showStatsFilter() {
     content.innerHTML = '';
     for (let i = 0; i < stats.length; i++) {
         const stat = stats[i]['stat']['name'];
-        content.innerHTML += `
-           <div class="d-flex area_range">
-           <p class="stat_filter">${stat}</p>
-           <p class="bigger_than_sign">></p>
-           <p class="stat_number" id="stat_number${i}">0</p>
-           <input id="rangebar${i}" onchange="setValue(${i})" type="range" min="0" max="255" value="0" class="rangebar" >
-           </div>
-           `;
+        content.innerHTML += getStatsFilter(i, stat);
     }
 }
 
@@ -284,6 +277,7 @@ function searchForNameTypeId(search) {
 }
 
 function showSearch(content, i) {
+    addLoadMoreButton();
     let name = allPokemons[i]['name'];
     let number = allPokemons[i]['id'];
     let pokemonPic = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
@@ -467,6 +461,10 @@ function showLoadMoreButton() {
 
 function removeLoadMoreButton() {
     document.getElementById('load_more_button').classList.add('d-none');
+}
+
+function addLoadMoreButton() {
+    document.getElementById('load_more_button').classList.remove('d-none');
 }
 
 function refreshLikeHeart() {

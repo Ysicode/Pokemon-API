@@ -181,6 +181,11 @@ body {
     color: white;
 }
 
+.search_not_found_underline {
+    font-size: 25px;
+    color: white;
+}
+
 .load_more_button {
     width: 100px;
     height: 100px;
@@ -1216,6 +1221,75 @@ p {
 
 }
 
+@media (max-height: 1200px) {
+    .usefilter_button {
+        width: 7rem;
+    height: 2.7rem;
+    font-size: 17px;
+    }
+
+    .headline_filter, h3 {
+        font-size: 22px;
+    }
+
+    .sort_kind1 {
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        margin-top: 20px;
+    }
+
+    .filter_navbar {
+        justify-content: flex-start;
+    }
+
+    .area_range_filter {
+        margin-top: 30px;
+    }
+}
+
+@media (max-height: 800px) {
+    .usefilter_button {
+        width: 5rem;
+    height: 1.7rem;
+    font-size: 14px;
+    }
+
+    .headline_filter, h3 {
+        font-size: 20px;
+    }
+
+    .sort_kind1 {
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        margin-top: 10px;
+    }
+
+    .filter_navbar {
+        justify-content: flex-start;
+    }
+
+    .area_range_filter {
+        margin-top: 15px;
+    }
+
+    .rangebar {
+       height: 15px;
+    }
+
+    .rangebar::-webkit-slider-thumb {
+        height: 15px;
+        width: 7px;
+    }
+
+    .stat_filter, .bigger_than_sign, .stat_number {
+        font-size: 15px;
+    }
+}
+
 @media (min-height: 1200px) {
     h1 {
         font-size: 70px;
@@ -1322,6 +1396,20 @@ p {
 
 @media (max-height: 700px) {
 
+    .sort_kind1, .sort_kind {
+        margin-bottom: 5px;
+    }
+    .rangebar {
+        width: 150px;
+    }
+
+    .headline_filter, h3 {
+        margin-top: 5px;
+        font-size: 15px;
+    }
+    .sort_kind {
+        margin-bottom: 5px;
+    }
     .title {
         font-size: 25px;
     }
@@ -1332,7 +1420,9 @@ p {
     }
 
     .usefilter_button {
-        height: 2rem;
+        height: 1.7rem;
+        font-size: 10px;
+        width: 3.5rem;
     }
 
     .filter_button img {
@@ -1484,13 +1574,26 @@ p {
 
 }
 
-@media (max-height: 400px) {
+@media (max-height: 700px) { 
+    .usefilter_button {
+        height: 1.2rem;
+    font-size: 9px;
+    width: 3.2rem;
+    }
+
+    .headline_filter, h3 {
+        font-size: 10px;
+    }
+}
+
+
+@media (max-height: 500px ) {
     .filter_navbar {
         flex-direction: row-reverse;
     }
 
     .headline_filter, h3 {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .stat_filter, .bigger_than_sign, .stat_number {
@@ -1500,13 +1603,13 @@ p {
     }
 
     .rangebar {
-        width: 160px;
-        height: 18px;
+        width: 100px;
+        height: 15px;
     }
 
     .rangebar::-webkit-slider-thumb {
-        height: 18px;
-        width: 7px;
+        height: 15px;
+        width: 5px;
     }
 
     .area_range_filter {
@@ -1515,13 +1618,39 @@ p {
     }
 
     .usefilter_button {
-        height: 1.8rem;
-        width: 4rem;
-        font-size: 13px;
+        height: 1.6rem;
+    width: 3rem;
+    font-size: 10px;
     }
 }
 
 @media (max-height: 350px) {
+
+    .rangebar {
+        height: 13px;
+        width: 80px
+    }
+
+    .rangebar::-webkit-slider-thumb {
+        height: 13px;
+        width: 3px;
+    }
+
+    .filter_navbar {
+        align-items: flex-start;
+        padding-top: 25px;
+    }
+
+    .headline_filter, h3 {
+        font-size: 13px;
+    }
+
+    .usefilter_button {
+    height: 1.2rem;
+    width: 2.7rem;
+    font-size: 8px;
+    }
+
     .title {
         font-size: 22px;
     }

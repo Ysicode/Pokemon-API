@@ -59,7 +59,8 @@ function showSearchNotFound() {
     return `
         <div class="area_search_not_found">
             <img class="search_icon_not_found" src="img/search.png">
-            <p class="search_not_found">Search not found </p>
+            <p class="search_not_found">Search not found</p>
+            <p class="search_not_found_underline">Search by Name, Type, Id</p>
         </div>
 `
 }
@@ -71,4 +72,15 @@ function showLikeSomePokemons() {
         <p class="search_not_found">Like Some Pokemons</p>
     </div>
 `
+}
+
+function getStatsFilter(i, stat) {
+    return `
+           <div class="d-flex area_range">
+                <p class="stat_filter">${stat}</p>
+                <p class="bigger_than_sign">></p>
+                <p class="stat_number" id="stat_number${i}">0</p>
+                <input id="rangebar${i}" onchange="setValue(${i})" type="range" min="0" max="255" value="0" class="rangebar" >
+           </div>
+           `
 }
