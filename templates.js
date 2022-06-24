@@ -19,7 +19,6 @@ function setTypesOfCurrentPokemon(type, j) {
     `
 }
 
-
 function showAllPokemons(i, name, number, pokemonPic) {
     return `
     <div onclick="openPokemonCard(${i})" class="d-none start_pokemon_card type_${getBackgroundColourAtListView(i)}" id="start_pokemon_card${i}">
@@ -37,7 +36,6 @@ function showAllPokemons(i, name, number, pokemonPic) {
 </div>
     `
 }
-
 
 function setTypeOfSelection(j, i, type) {
     return `
